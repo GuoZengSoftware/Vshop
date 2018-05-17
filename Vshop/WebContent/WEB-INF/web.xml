@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>Vshop</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<!--配置登陆Servlet -->
+	<servlet>
+		<servlet-name>HandleAllUuserServlet</servlet-name>
+		<servlet-class>com.ygz.vshop.servlet.HandleAllUuserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HandleAllUuserServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<!-- 配置登陆菜操作的界面 -->
+	<context-param>
+		<param-name>login_page</param-name>
+		<param-value>/index.jsp</param-value>
+	</context-param>
+	<!-- 配置需要登陆才能操作的类 -->
+	<context-param>
+		<param-name>validate_page</param-name>
+		<param-value>/View/main.jsp,/View/main.do,/View/main.jsp,/View/info.do/,/View/info.jsp,/View/updateuserinfo.do,/View/add.jsp,/View/add_userinfo.do,/View/check.do,/View/main.do,/View/main.jsp</param-value>
+	</context-param>
+	<!-- 配置公共的登陆操作 -->
+	<context-param>
+		<param-name>common_page</param-name>
+		<param-value>/index.jsp,/View/login.do,/getpassword.jsp,/View/retrievepassword.do,/View/updatepass.jsp,/alterpassword.do,/View/exit.jsp,/View/user.do</param-value>
+	</context-param>
+	<!-- 配置字符过滤器 -->
+	<filter>
+		<filter-name>AllCharEncoding</filter-name>
+		<filter-class>com.ygz.vshop.filter.AllCharEncoding</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>AllCharEncoding</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	<!--配置登陆过滤器 -->
+	<filter>
+		<filter-name>ValidateFilter</filter-name>
+		<filter-class>com.ygz.vshop.filter.ValidateFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ValidateFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>ValidateFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>CheckLogin</filter-name>
+		<filter-class>com.ygz.vshop.filter.CheckLogin</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CheckLogin</filter-name>
+		<url-pattern>/View/*</url-pattern>
+	</filter-mapping>
+</web-app>
